@@ -1,0 +1,9 @@
+---
+
+- name: Download HTTPD for 1st instance
+  tag: apache
+  get_url: url=http://vault.centos.org/7.6.1810/os/Source/SPackages/httpd-2.4.6-88.el7.centos.src.rpm dest /opt/httpd
+   
+- name: Install HTTPD
+  tag: apache
+  command: rpm -ivh /opt/httpd/httpd-2.4.6-88.el7.centos.src.rpm

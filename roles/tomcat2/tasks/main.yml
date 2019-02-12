@@ -1,0 +1,40 @@
+---
+
+- name: Download OpenJDK8
+  get_url: url=https://download.oracle.com/otn-pub/java/jdk/8u201-b09/42970487e3af4f5aa5bca3f542482c60/jdk-8u201-linux-x64.rpm dest=/opt/jdk-8
+  tag: tomcat
+    
+- name: Install OpenJDK8
+  command: rpm -ivh /opt/jdk-8/jdk-8u201-linux-x64.rpm
+  tag: tomcat
+    
+- name: add "tomcat" as user and group
+  group: name=tomcat2
+  user: name=tomcat2 group=tomcat2 createhome=no
+  tag: tomcat
+    
+- name: "Extract the Tomcat zip into 1st Tomcat instance"
+  command: tar -xvf /opt/apache-tomcat-8.5.35.tar.gz -C /opt/tomcat-8-two
+  tag: tomcat
+   
+- name: Changing the ownership of tomcat installation
+  file: path=/opt/tomcat-8-two/ owner=tomcat2 group=tomcat2 state=directory recurse=yes
+  tag: tomcat
+  
+- name: Configure Tomcat for Server 1
+  tag: tomcat
+  template: src=server.xml dest=/opt/tomcat-8-two/conf/
+  notify: restart_tomcat
+
+- name: Configure Tomcat users for server 1
+  tag: tomcat
+  template: src=tomcat-users.xml dest=/opt/tomcat-8-two/conf/
+  notify: restart_tomcat
+
+- name: Install the Tomcat service script
+  copy: src=tomcat-service.sh dest=/etc/init.d/tomcat2 mode=0755
+  tag: tomcat
+
+- name: Running Tomcat 8 as service
+  service: name=tomcat2 state=started enabled=yes
+  tag: tomcat
