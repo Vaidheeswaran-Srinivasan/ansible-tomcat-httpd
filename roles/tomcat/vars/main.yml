@@ -1,0 +1,21 @@
+# Variables for multiple Tomcat installation
+
+ports:
+  app1:
+    shutdown: 8005
+    http: 8080
+    https: 8443
+    ajp: 8009
+  app2:
+    shutdown: 8006
+    http: 8081
+    https: 8444
+    ajp: 8010
+  app3:
+    shutdown: 8007
+    http: 8082
+    https: 8445
+    ajp: 8011
+    
+admin_username: admin
+admin_password: adminsecret

@@ -1,0 +1,11 @@
+---
+# defaults for Tomcat & JDK
+
+tomcat_application: Tomcat8
+tomcat_major_version: "8"
+tomcat_minor_version: "5.38"
+tomcat_url: "http://mirrors.estointernet.in/apache/tomcat/tomcat-{{ tomcat_major_version }}/v{{ tomcat_major_version }}.{{ tomcat_minor_version }}/bin/apache-tomcat-{{ tomcat_major_version }}.{{ tomcat_minor_version }}.tar.gz"
+java_url: https://download.oracle.com/otn-pub/java/jdk/8u201-b09/42970487e3af4f5aa5bca3f542482c60/jdk-8u201-linux-x64.rpm
+java_application: OpenJDK8
+java_installable: jdk-8u201-linux-x64.rpm
+java_ver: jdk8

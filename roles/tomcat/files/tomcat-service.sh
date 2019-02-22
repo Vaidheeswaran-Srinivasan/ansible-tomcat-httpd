@@ -2,10 +2,10 @@
  
 ECHO=/bin/echo
 TEST=/usr/bin/test
-TOMCAT_USER=tomcat1
-TOMCAT_HOME=/opt/tomcat-8-one
-TOMCAT_START_SCRIPT=$TOMCAT_HOME/bin/startup.sh
-TOMCAT_STOP_SCRIPT=$TOMCAT_HOME/bin/shutdown.sh
+TOMCAT_USER={{ application_name}}-tomcat }}
+TOMCAT_HOME/opt/{{ application_name }}/{{ application_name}}-tomcat-{{ tomcat_major_version }}
+TOMCAT_START_SCRIPT/opt/{{ application_name }}/{{ application_name}}-tomcat-{{ tomcat_major_version }}/bin/startup.sh
+TOMCAT_STOP_SCRIPT=/opt/{{ application_name }}/{{ application_name}}-tomcat-{{ tomcat_major_version }}/bin/shutdown.sh
  
 $TEST -x $TOMCAT_START_SCRIPT || exit 0
 $TEST -x $TOMCAT_STOP_SCRIPT || exit 0

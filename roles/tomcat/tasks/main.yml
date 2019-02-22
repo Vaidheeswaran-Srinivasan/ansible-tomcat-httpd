@@ -1,0 +1,74 @@
+--- 
+# Playbook for multiple Tomcat installation. Playbook should be runned with "--exta-vars" flag to mention the {{ application_name }}
+# {{ application_name}} should be either of the three : app1 (or) app2 (or) app3
+
+- name: "Download {{ java_application }}"
+  get_url: 
+    url: "{{ java_url }}" 
+    dest: "/opt/{{ java_ver }}"
+  tag: tomcat
+    
+- name: "Install {{ java_application }}"
+  command: "rpm -ivh /opt/{{ java_ver }}/{{ java_installable }}"
+  tag: tomcat
+    
+- name: "add {{ application_name}}-tomcat as user and group"
+  group:
+    name: "{{ application_name}}-tomcat }}"
+  user: 
+    name: "{{ application_name}}-tomcat }}" 
+    group: "{{ application_name}}-tomcat }}"
+    shell: /bin/bash
+    createhome: yes
+  tag: tomcat
+    
+- name: "Download {{ tomcat_application }}"
+  get_url: 
+    url: "{{ tomcat_url }}" dest="/opt/{{ application_name }}"
+  tag: tomcat
+    
+- name: "Extract the {{ tomcat_application }}"
+  unarchive:
+    src: "/opt/{{ application_name }}
+    dest: "/opt/{{ application_name }}/{{ application_name}}-tomcat-{{ tomcat_major_version }}"
+    mode: 0644
+    owner: "root"
+    group: "root"
+  tag: tomcat
+   
+- name: Changing the ownership of {{ tomcat_application }} installation
+  file: 
+    path: "/opt/{{ application_name }}/{{ application_name}}-tomcat-{{ tomcat_major_version }}" 
+    owner: "{{ application_name}}-tomcat }}" 
+    group: "{{ application_name}}-tomcat }}" 
+    state: directory 
+    recurse: yes
+  tag: tomcat
+    
+- name: "Configure server.xml file for {{ tomcat_application }}"
+  template: 
+    src: "/templates/server.xml"
+    dest: "/opt/{{ application_name }}/{{ application_name}}-tomcat-{{ tomcat_major_version }}/conf/server.xml"
+  notify: restart_tomcat
+  tag: tomcat
+ 
+- name: "Configure users file for {{ tomcat_application }}"
+  template: 
+    src: "/templates/tomcat-users.xml 
+    dest: "/opt//{{ application_name }}/{{ application_name}}-tomcat-{{ tomcat_major_version }}/conf/tomcat-users.xml
+  notify: restart_tomcat
+  tag: tomcat
+  
+- name: "Install {{ tomcat_application }} service script"
+  copy: 
+    src: "/files/tomcat-service.sh" 
+    dest: "/etc/init.d/{{ application_name}}-tomcat-{{ tomcat_major_version }}" 
+    mode: 0755
+  tag: tomcat
+
+- name: Running {{ tomcat_application }} service
+  service: 
+    name: "{{ application_name}}-tomcat-{{tomcat_major_version }} 
+    state: started 
+    enabled: yes
+  tag: tomcat

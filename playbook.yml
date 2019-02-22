@@ -1,18 +1,14 @@
-# Playbook to install 1 HTTPD and 3 TOMCAT servers 
-
 ---
-
-- connection: local
-  hosts: localhost
+# Playbook to install one HTTPD and multiple TOMCAT servers
+- hosts: localhost
+  connection: local
+  become_method: sudo
+  become: yes
+  gather_facts: no
     
   roles:
     - role: httpd
       tags: apache
-    - role: tomcat1
+    - role: tomcat
       tags: tomcat
-    - role: tomcat2
-      tags: tomcat
-    - role: tomcat3
-      tags: tomcat
-   
   
