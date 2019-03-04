@@ -17,5 +17,13 @@ ports:
     https: 8445
     ajp: 8011
     
+classname:
+  app1:
+    class: "com.aimia.nectar.openapi.accesslog.OpenAPIAccessLogValve"
+  app2:
+    class: 
+  app3:
+    class:
+    
 admin_username: admin
 admin_password: adminsecret
