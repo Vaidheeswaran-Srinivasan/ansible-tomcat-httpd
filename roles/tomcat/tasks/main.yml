@@ -59,6 +59,18 @@
   notify: restart_tomcat
   tag: tomcat
   
+- name: "Configure other app files for {{ tomcat_application }}"
+  file: 
+    path: "/opt//{{ application_name }}/{{ application_name}}-tomcat-{{ tomcat_major_version }}/conf/{{ item }}
+    state: present
+  with_items:
+    - "/templates/catalina.properties"
+    - "/templates/context.xml"
+    - "/templates/logging.properties"
+    - /templates/repository.xml"
+  when: "{{ application_name }}" == "app1"
+  notify: restart_tomcat
+  
 - name: "Install {{ tomcat_application }} service script"
   copy: 
     src: "/files/tomcat-service.sh" 
