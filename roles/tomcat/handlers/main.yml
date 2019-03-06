@@ -1,5 +1,4 @@
 ---
-
 - name: restart_tomcat
   service: 
     name: "{{ application_name}}-tomcat-{{tomcat_major_version }}" 
