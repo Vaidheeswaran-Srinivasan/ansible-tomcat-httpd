@@ -6,6 +6,5 @@
   become: yes
   gather_facts: no
   roles:
-  - {role: httpd, tags: apache}
   - {role: tomcat, tags: tomcat}
   
